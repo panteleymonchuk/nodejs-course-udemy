@@ -1,0 +1,21 @@
+{
+  "name": "nodejs-course-udemy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/panteleymonchuk/nodejs-course-udemy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/panteleymonchuk/nodejs-course-udemy/issues"
+  },
+  "homepage": "https://github.com/panteleymonchuk/nodejs-course-udemy#readme"
+}
