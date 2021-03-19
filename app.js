@@ -18,15 +18,25 @@ const server = http.createServer((req, res) => {
         res.write('<title>My first page</title>');
         res.write('</head>');
         res.write('<body>');
-        res.write('<form action="/form" method="POST"><input name="message" /><button type="submit">Submit</button></form>');
+        res.write('<form action="/form" method="POST"><input name="message" /><input name="text" /><button type="submit">Submit</button></form>');
         res.write('</body>');
         res.write('</html>');
         return res.end(); // даём понять, что мы закончили ответ
     }
     
     if (req.url === '/form' && req.method === 'POST') {
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
+        const body = [];
+        
+        req.on("data", (chunk) => {
+          body.push(chunk);
+          console.log(chunk);
+        });
+        req.on("end", () => {
+          const parsedBody = Buffer.concat(body).toString();
+          console.log(' --- parsedBody --- ', parsedBody);
+        });
+        // res.statusCode = 302;
+        // res.setHeader('Location', '/');
         return res.end();
     }
     // process.exit();
