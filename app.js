@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 
 // Method which actually returns a server. But we need to run this server.
 const server = http.createServer((req, res) => {
@@ -26,19 +27,24 @@ const server = http.createServer((req, res) => {
     
     if (req.url === '/form' && req.method === 'POST') {
         const body = [];
-        
+        console.log('Код будет выполнен первым');
         req.on("data", (chunk) => {
-          body.push(chunk);
-          console.log(chunk);
+            body.push(chunk);
+            console.log(chunk);
         });
-        req.on("end", () => {
-          const parsedBody = Buffer.concat(body).toString();
-          console.log(' --- parsedBody --- ', parsedBody);
+        return req.on("end", () => {
+            const parsedBody = Buffer.concat(body).toString();
+            console.log(' --- parsedBody --- ', parsedBody);
+            fs.writeFile('./nameOfFile.txt', 'fasdf',(err) => {
+                console.log('код будет выполнен третьим');
+                return res.end();
+            });
+            
         });
-        // res.statusCode = 302;
-        // res.setHeader('Location', '/');
-        return res.end();
+        console.log('код будет выполнен вторым');
     }
+    
+    console.log('код будет выполнен если в if нету return')
     // process.exit();
 });
 
