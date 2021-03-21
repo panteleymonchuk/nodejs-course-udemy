@@ -4,16 +4,15 @@ const path = require('path');
 const router = express.Router();
 const { ROUTES } = require('./../constants');
 
-
+const { products } = require('../db');
 
 router.get(ROUTES.addProduct, (req, res, next) => {
-  res.sendFile(path.join(__dirname, '..', 'views', 'shop.html'));
+  res.render('add-product.pug');
 });
 
 router.post(ROUTES.addProduct, (req, res, next) => {
-  // console.log(req);
-  console.log(res.body);
-  // res.send('<h1>Test</h1>');
+  console.log(req.body.username);
+  products.push(req.body.username);
   res.redirect(ROUTES.root);
 });
 
