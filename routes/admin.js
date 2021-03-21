@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 
 const router = express.Router();
 const { ROUTES } = require('./../constants');
@@ -6,22 +7,10 @@ const { ROUTES } = require('./../constants');
 
 
 router.get(ROUTES.addProduct, (req, res, next) => {
-  res.send(`
-  <html>
-    <head>
-      <title>My first page</title>
-    </head>
-    <body>
-      <form action="${ROUTES.addProductFormdata}" method="POST">
-        <input name="username" />
-        <button type="submit">Submit</button>
-      </form>
-      <a href="/users">List of Users</a>
-    </body>
-  </html>`);
+  res.sendFile(path.join(__dirname, '..', 'views', 'shop.html'));
 });
 
-router.post(ROUTES.addProductFormdata, (req, res, next) => {
+router.post(ROUTES.addProduct, (req, res, next) => {
   // console.log(req);
   console.log(res.body);
   // res.send('<h1>Test</h1>');
