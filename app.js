@@ -1,6 +1,13 @@
 const http = require('http');
-const routes = require('./routes');
-// Method which actually returns a server. But we need to run this server.
-const server = http.createServer(routes);
+const express = require('express');
 
-server.listen(3000);
+const app = express();
+const routes = require('./routes');
+
+app.use((req, res, next) => {
+  console.log(req);
+  
+  res.send('<h1>Test</h1>');
+});
+
+app.listen(3000);
