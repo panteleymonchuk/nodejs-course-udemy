@@ -7,7 +7,7 @@ const { ROUTES } = require('./../constants');
 const { products } = require('../db');
 
 router.get(ROUTES.addProduct, (req, res, next) => {
-  res.render('add-product.pug');
+  res.render('add-product.handlebars');
 });
 
 router.post(ROUTES.addProduct, (req, res, next) => {
