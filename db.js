@@ -1,4 +1,4 @@
-const products = ['asdfasf'];
+const products = [];
 
 module.exports = {
   products,
