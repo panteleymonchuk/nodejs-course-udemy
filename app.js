@@ -21,4 +21,6 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000);
+app.listen(3000, null, () => {
+    console.log(`Host started at port 3000`);
+});
