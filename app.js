@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/errors');
+const sequelize = require('./utils/database');
 
 const app = express();
 
@@ -21,6 +22,9 @@ app.use(shopRoutes);
 
 app.use(errorController.get404);
 
-app.listen(3000, null, () => {
-    console.log(`Host started at port 3000`);
+sequelize.sync().then(() => {
+    app.listen(3000, null, () => {
+        console.log(`Host started at port 3000`);
+    });
 });
+
