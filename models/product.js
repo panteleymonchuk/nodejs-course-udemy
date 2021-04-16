@@ -15,7 +15,7 @@ Product.init({
     type: DataTypes.DOUBLE,
     allowNull: false,
   },
-  imageIrl: {
+  imageUrl: {
     type: DataTypes.STRING,
     allowNull: false,
   },
