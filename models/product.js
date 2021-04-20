@@ -1,7 +1,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../utils/database');
 
-class Product extends Model {};
+
+class Product extends Model {
+}
 
 Product.init({
   id: {
