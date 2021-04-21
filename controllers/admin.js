@@ -13,16 +13,22 @@ exports.postAddProduct = (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const price = req.body.price;
   const description = req.body.description;
-
-  const product = Product.create({
-    title: title,
-    imageUrl: imageUrl,
-    price: price,
-    description: description,
-  }).then((result) => {
-    console.log(result);
-    res.redirect('/');
-  });
+  
+  /**
+   * Method 'createProduct' is created automatically,
+   * because we set relations between user and product
+   */
+  req.user
+    .createProduct({
+      title: title,
+      imageUrl: imageUrl,
+      price: price,
+      description: description,
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect('/');
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
