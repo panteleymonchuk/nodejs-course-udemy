@@ -9,18 +9,37 @@ const sequelize = require('./utils/database');
 
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
+
+/**
+ * Associations
+ */
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Product);
+User.hasOne(Cart);
 
+// 1 cart can include man
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });
+
+
+/**
+ * Express APP
+ */
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
 
+
+
+/**
+ * Middlewares
+ */
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
@@ -32,16 +51,26 @@ app.use((req, res, next) => {
       .catch(err => console.log(err));
 });
 
+
+/**
+ * Routes
+ */
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
-
 app.use(errorController.get404);
 
+
+/**
+ * Sequelize
+ */
 sequelize
+  // .sync({ force: true })
   .sync()
   .then((res) => {
       return User.findByPk(1);
-      
   })
   .then((user) => {
       if (!user) {
