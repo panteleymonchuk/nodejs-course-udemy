@@ -94,7 +94,7 @@ exports.postCart = (req, res, next) => {
         }
       })
     })
-    then(() => {
+    .then(() => {
       res.redirect('/cart')
     })
     .catch();
@@ -108,11 +108,25 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Product.findByPk(prodId).then(products => {
-    const [product] = products;
-    Cart.deleteProduct(prodId, product.price);
-    res.redirect('/cart');
-  });
+  req.user
+    .getCart()
+    .then((cart) => {
+      return cart.getProducts()
+    })
+    .then((products) => {
+      const product = products[0];
+      // cartItem - sequelize magic field
+      return product.cartItem.destroy();
+    })
+    .then((result) =>  {
+      res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+  // Product.findByPk(prodId).then(products => {
+  //   const [product] = products;
+  //   Cart.deleteProduct(prodId, product.price);
+  //   res.redirect('/cart');
+  // });
 };
 
 exports.getOrders = (req, res, next) => {
