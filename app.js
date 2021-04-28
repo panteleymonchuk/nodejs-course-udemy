@@ -6,7 +6,9 @@ const bodyParser = require('body-parser');
 const errorController = require('./controllers/errors');
 const sequelize = require('./utils/database');
 
-
+/**
+ * Models
+ */
 const Product = require('./models/product');
 const User = require('./models/user');
 const Cart = require('./models/cart');
@@ -75,19 +77,19 @@ sequelize
   .then((res) => {
     return User.findByPk(1);
   })
-  .then((user) => {
-    if (!user) {
-      return User.create({
-        name: 'Max',
-        email: 'test@test.com'
-      })
-    }
-    return user;
-    
-  })
-  .then((user) => {
-    return user.createCart();
-  })
+  // .then((user) => {
+  //   if (!user) {
+  //     return User.create({
+  //       name: 'Max',
+  //       email: 'test@test.com'
+  //     })
+  //   }
+  //   return user;
+  //
+  // })
+  // .then((user) => {
+  //   return user.createCart();
+  // })
   .then(() => {
     app.listen(3000, null, () => {
       console.log(`Host started at port 3000`);

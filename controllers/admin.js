@@ -26,8 +26,7 @@ exports.postAddProduct = (req, res, next) => {
       description: description,
     })
     .then((result) => {
-      console.log(result);
-      res.redirect('/');
+      res.redirect('/admin/products');
     });
 };
 
@@ -42,7 +41,6 @@ exports.getEditProduct = (req, res, next) => {
   // Product.findByPk(prodId)
     .then((products) => {
       const [ product ] = products;
-      // console.log(' --- product --- ', product);
     if (!product) {
       return res.redirect('/');
     }
@@ -79,9 +77,10 @@ exports.postEditProduct = (req, res, next) => {
       product.price = updatedPrice;
       product.description = updatedDesc;
       product.imageUrl = updatedImageUrl;
-      product.save();
+      return product.save();
     })
-    .then(() => res.redirect('/admin/products'));
+    .then((result) => res.redirect('/admin/products'))
+    .catch(err => console.log(err));
 };
 
 exports.getProducts = (req, res, next) => {
