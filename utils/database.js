@@ -1,24 +1,12 @@
-const { Sequelize } = require('sequelize');
+const mdb = require('mongodb');
+const MongoClient = mdb.MongoClient;
 
-const sequelize = new Sequelize({
-  database: 'udemy-nodejs-maximilian',
-  dialect: 'mysql',
-  username: 'root',
-  password: 'rootroot',
-  host: 'localhost',
-  port: 3306,
-});
+const mongoConnect =  (callback) => {
+  MongoClient.connect('mongodb+srv://root:rootroot@cluster0.kjmws.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
+    .then((res) => {
+      callback(res);
+    })
+    .catch(err => console.log(err))
+};
 
-// const sequelize = 
-
-// const mysql = require('mysql2');
-
-// const pool = mysql.createPool({
-//   host: 'localhost',
-//   port: 3306,
-//   user: 'root',
-//   database: 'udemy-nodejs-maximilian',
-//   password: 'rootroot'
-// });
-
-module.exports = sequelize;
+module.exports = mongoConnect;
