@@ -1,31 +1,25 @@
-const { Model, DataTypes } = require('sequelize');
+const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../utils/database');
+const getDb = require('../utils/database').getDb;
 
 
-class Product extends Model {
-}
-
-Product.init({
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true,
-  },
-  title: DataTypes.STRING,
-  price: {
-    type: DataTypes.DOUBLE,
-    allowNull: false,
-  },
-  imageUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
+class Product {
+  constructor(title, price, description, imageUrl) {
+    this.title = title;
+    this.price = price;
+    this.description = description;
+    this.imageUrl = imageUrl;
+    
   }
-}, { sequelize, modelName: 'product' });
-
+  
+  save() {
+    const db = getDb();
+    return db
+      .collection('products')
+      .insertOne(this)
+      .then(r => console.log(r))
+      .catch();
+  }
+}
 
 module.exports = Product;

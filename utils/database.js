@@ -1,12 +1,28 @@
-const mdb = require('mongodb');
-const MongoClient = mdb.MongoClient;
+const MongoClient = require('mongodb').MongoClient;
+
+let _db;
+
+// console.log(' --- MongoClient --- ', MongoClient);
 
 const mongoConnect =  (callback) => {
-  MongoClient.connect('mongodb+srv://root:rootroot@cluster0.kjmws.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
-    .then((res) => {
-      callback(res);
+  const mongoClient = MongoClient('mongodb+srv://root:rootroot@cluster0.kjmws.mongodb.net/shop', { useUnifiedTopology: true })
+  .connect()
+    .then((client) => {
+      console.log('connected');
+      _db = client.db();
+      callback();
+
     })
     .catch(err => console.log(err))
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+  if (_db) {
+    return _db;
+  }
+  throw 'No database found';
+};
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
+

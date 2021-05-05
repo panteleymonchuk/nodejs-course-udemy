@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const errorController = require('./controllers/errors');
-const mongoConnect = require('./utils/database');
+const mongoConnect = require('./utils/database').mongoConnect;
 
 /**
  * Express APP
@@ -25,15 +25,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * Routes
  */
-// const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 // app.use(shopRoutes);
 app.use(errorController.get404);
 
 
-mongoConnect((client) => {
-  console.log(client);
-  app.listen(3000);
+mongoConnect(() => {
+  app.listen(3000, () => {
+    console.log(' --- Started --- ');
+  });
 });
