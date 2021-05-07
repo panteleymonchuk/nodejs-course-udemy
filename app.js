@@ -26,10 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
  * Routes
  */
 const adminRoutes = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
+const shopRoutes = require('./routes/shop');
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 app.use(errorController.get404);
 
 
@@ -38,3 +38,4 @@ mongoConnect(() => {
     console.log(' --- Started --- ');
   });
 });
+
