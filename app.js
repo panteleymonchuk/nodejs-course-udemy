@@ -21,21 +21,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   User.findOne().then(user => {
-    console.log(user);
     if (!user) {
       // Create user here
       req.user = new User(user.name, user.email, user.cart, user._id);
     } else {
       User.findById("60979e8262a6c7918fd9f511")
         .then((user) => {
-          console.log(user, "1111");
           req.user = user;
           next();
         })
         .catch((err) => console.log(err));
     }
   })
-  // next();
 });
 
 app.use('/admin', adminRoutes);
