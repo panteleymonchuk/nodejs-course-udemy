@@ -26,7 +26,8 @@ app.use((req, res, next) => {
       req.user = new User(user.name, user.email, user.cart, user._id);
     } else {
       User.findById("60979e8262a6c7918fd9f511")
-        .then((user) => {
+      .then((user) => {
+          // console.log('middleware', user);
           req.user = user;
           next();
         })
